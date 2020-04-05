@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://ip:3306/publish
+    username: root
+    password:
+    hikari:
+      maximum-pool-size: 10
+
+# mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.hotstrip.publish.model
+
+# pagehelper
+pagehelper:
+  reasonable: true
+  row-bounds-with-count: true
+
+# log
+logging:
+  config: classpath:logback.xml
