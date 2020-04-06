@@ -1,4 +1,4 @@
-package com.seestech.sell.common.config;
+package com.hotstrip.publish.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

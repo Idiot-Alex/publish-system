@@ -44,7 +44,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (StringUtils.isEmpty(tokenValue)){
             // 输出错误信息
             logger.error("token interceptor.............token is null");
-            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_PARAM, "token is null")));
+            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_TOKEN, "token is null")));
             return false;
         }
         // 解密token
@@ -53,26 +53,26 @@ public class TokenInterceptor implements HandlerInterceptor {
             decodeToken = TokenUtil.decodeToken(tokenValue);
         } catch (Exception e) {
             logger.error("token interceptor........token decode failed");
-            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_PARAM, "token decode failed")));
+            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_TOKEN, "token decode failed")));
             return false;
         }
         String[] message = decodeToken.split(Const.HASH_TAG);
         if (message == null || message.length != 2){
             // 输出错误信息
             logger.error("token interceptor.............token decode failed");
-            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_PARAM, "token decode failed")));
+            httpServletResponse.getWriter().write(JSON.toJSONString(R.error(Const.ERROR_TOKEN, "token decode failed")));
             return false;
         }
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 
     }
 }
