@@ -2,14 +2,13 @@ import axios from 'axios'
 import qs from 'qs'
 import { Message, Notification } from 'element-ui'
 import store from '../store'
-import { getToken } from '@/util/auth'
 
 const CODE_510 = 510
 
 // 创建axios实例
 const service = axios.create({
   timeout: 5000,
-  baseURL: 'http://192.168.0.8:8080/',
+  baseURL: 'http://127.0.0.1:8080/',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
   },
@@ -24,7 +23,7 @@ service.interceptors.request.use(
 
     if (store.getters.token) {
       // 让每个请求携带自定义token 请根据实际情况自行修改
-      config.headers['token'] = getToken()
+      config.headers['token'] = store.getters.token
     }
     return config
   },

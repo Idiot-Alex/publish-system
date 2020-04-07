@@ -1,3 +1,20 @@
 .app-container {
   padding: 10px;
 }
+
+.app-main {
+  min-height: auto;
+}
+
+.pagination-container {
+  margin-top: 15px;
+}
+
+.filter-container {
+  padding-bottom: 10px;
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}

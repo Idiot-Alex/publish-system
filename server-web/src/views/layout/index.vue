@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="200px">
         <el-menu
-          default-active="1"
+          :default-active="activeMenu"
           class="el-menu-vertical"
           background-color="#545c64"
           text-color="#fff"
@@ -35,9 +35,9 @@
           <h1>信息发布系统</h1>
           <span class="user-name">当前用户：{{ userName }}</span>
         </el-header>
-        <el-main>
+        <section class="app-main">
           <router-view/>
-        </el-main>
+        </section>
       </el-container>
     </el-container>
   </div>
@@ -50,13 +50,23 @@ export default {
   },
   data() {
     return {
-      currentPath: '/dashboard'
+      currentPath: '/dashboard',
+      activeMap: {
+        '/dashboard': '1',
+        '/agent': '2',
+        '/file': '3',
+        '/article': '4',
+        '/user': '5'
+      }
     }
   },
   computed: {
     ...mapGetters([
       'userName'
     ]),
+    activeMenu() {
+      return this.activeMap[this.$route.path]
+    }
   },
   methods: {
     // 跳转路由

@@ -11,3 +11,12 @@ export function login(userName, userPassword) {
     }
   })
 }
+
+// 分页查询
+export function getUsers(data) {
+  return request({
+    url: '/web/user/list',
+    method: 'post',
+    data
+  })
+}

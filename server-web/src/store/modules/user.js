@@ -25,7 +25,7 @@ export default {
         login(userInfo.userName, userInfo.userPassword).then(response => {
           const data = response.data
           if (data !== undefined) {
-            setToken(data.Token)
+            setToken(data.token)
             setValue('userId', data.userId)
             setValue('userName', data.userName)
             commit('SET_TOKEN', data.token)
