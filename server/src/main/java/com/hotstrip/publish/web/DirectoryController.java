@@ -75,9 +75,12 @@ public class DirectoryController extends SuperController {
     @NotNullParam(params = {"directoryName"})
     @PostMapping(value = "/web/directory/edit")
     public Object edit(Long directoryId,
-                       String directoryName) {
+                       String directoryName,
+                       Long parentDirectoryId) {
         Directory info = Directory.builder()
+                .directoryId(directoryId)
                 .directoryName(directoryName)
+                .parentDirectoryId(parentDirectoryId)
                 .build();
         if (null == directoryId) {
             // 新增

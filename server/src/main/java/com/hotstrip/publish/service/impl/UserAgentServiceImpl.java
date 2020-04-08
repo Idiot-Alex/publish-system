@@ -36,4 +36,11 @@ public class UserAgentServiceImpl implements UserAgentService {
             logger.error("delete userAgent by userId failed...userId: [{}]", userId);
         }
     }
+
+    @Override
+    public void deleteByAgentId(Long agentId) {
+        if (userAgentDao.deleteByAgentId(agentId) < 1) {
+            logger.error("delete userAgent by userId failed...agentId: [{}]", agentId);
+        }
+    }
 }

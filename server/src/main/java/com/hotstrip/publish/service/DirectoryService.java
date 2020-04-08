@@ -16,4 +16,10 @@ public interface DirectoryService {
 
     // 分页查询
     Page<Directory> getDirectories(RowBounds rowBounds, Directory info);
+
+    // 根据 directoryId 查询
+    Directory getDirectoryByDirectoryId(Long directoryId);
+
+    // 获取目录路径
+    String getDirectoryPathByDirectoryId(Long directoryId);
 }

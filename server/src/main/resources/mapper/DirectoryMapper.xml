@@ -3,7 +3,7 @@
 <mapper namespace="com.hotstrip.publish.dao.DirectoryDao">
 
     <sql id="Base_Column_List">
-        directory_id, directory_name, parent_derectory_id, root_flag, path_code,
+        directory_id, directory_name, parent_directory_id, root_flag, path_code,
         create_time, update_time, create_user, update_user, status
     </sql>
 
@@ -75,6 +75,40 @@
             </if>
         </trim>
     </insert>
+
+    <update id="update" parameterType="com.hotstrip.publish.model.Directory">
+        update t_directory
+        <set>
+            <if test="directoryName != null and directoryName != ''">
+                directory_name = #{directoryName, jdbcType=VARCHAR},
+            </if>
+            <if test="parentDirectoryId != null">
+                parent_directory_id = #{parentDirectoryId, jdbcType=BIGINT},
+            </if>
+            <if test="rootFlag != null">
+                root_flag = #{rootFlag, jdbcType=INTEGER},
+            </if>
+            <if test="pathCode != null and pathCode != ''">
+                path_code = #{pathCode, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser, jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser, jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER},
+            </if>
+        </set>
+        where directory_id = #{directoryId, jdbcType=BIGINT}
+    </update>
 
     <!--分页查询-->
     <select id="getDirectories" parameterType="com.hotstrip.publish.model.Directory" resultType="com.hotstrip.publish.model.Directory">

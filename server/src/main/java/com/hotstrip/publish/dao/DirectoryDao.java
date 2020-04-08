@@ -5,6 +5,7 @@ import com.hotstrip.publish.model.Directory;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
 @Mapper
@@ -21,4 +22,8 @@ public interface DirectoryDao {
 
     // 分页查询
     Page<Directory> getDirectories(RowBounds rowBounds, Directory info);
+
+    // 根据 directoryId 查询
+    @Select("select * from t_directory where directory_id = #{directoryId}")
+    Directory getDirectoryByDirectoryId(@Param("directoryId") Long directoryId);
 }

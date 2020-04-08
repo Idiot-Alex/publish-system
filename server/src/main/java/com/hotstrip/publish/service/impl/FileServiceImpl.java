@@ -19,8 +19,8 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void insert(FileInfo info) {
-        if (null == info.getDirectoryId())
-            info.setDirectoryId(IdGen.get().nextId());
+        if (null == info.getFileId())
+            info.setFileId(IdGen.get().nextId());
         if (null == info.getCreateTime())
             info.setCreateTime(new Date());
         if (fileDao.insert(info) < 1) {

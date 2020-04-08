@@ -8,4 +8,7 @@ public interface UserAgentService {
 
     // 根据 userId 删除
     void deleteByUserId(Long userId);
+
+    // 根据 agentId 删除
+    void deleteByAgentId(Long agentId);
 }

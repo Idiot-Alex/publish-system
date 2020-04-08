@@ -118,6 +118,8 @@ public class AgentController extends SuperController {
     public Object delete(Long agentId) {
         // 先删除 agentPlaylist 数据
         agentPlaylistService.deleteByAgentId(agentId);
+        // 删除 userAgent 数据
+        userAgentService.deleteByAgentId(agentId);
         // 删除终端
         agentService.deleteByAgentId(agentId);
         return R.ok("success");
