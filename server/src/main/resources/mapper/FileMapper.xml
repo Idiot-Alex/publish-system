@@ -110,19 +110,19 @@
                 file_size = #{fileSize, jdbcType=BIGINT},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
+                create_time = #{createTime, jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
+                update_time = #{updateTime, jdbcType=TIMESTAMP},
             </if>
             <if test="createUser != null">
-                create_user = #{createUser,jdbcType=BIGINT},
+                create_user = #{createUser, jdbcType=BIGINT},
             </if>
             <if test="updateUser != null">
-                update_user = #{updateUser,jdbcType=BIGINT},
+                update_user = #{updateUser, jdbcType=BIGINT},
             </if>
             <if test="status != null">
-                status = #{status,jdbcType=INTEGER},
+                status = #{status, jdbcType=INTEGER},
             </if>
         </set>
     </update>

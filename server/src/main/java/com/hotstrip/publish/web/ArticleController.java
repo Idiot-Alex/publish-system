@@ -1,8 +1,10 @@
 package com.hotstrip.publish.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.hotstrip.publish.common.annotation.NotNullParam;
 import com.hotstrip.publish.common.annotation.RequireToken;
+import com.hotstrip.publish.common.util.JsonUtil;
 import com.hotstrip.publish.model.Article;
 import com.hotstrip.publish.model.R;
 import com.hotstrip.publish.service.ArticleService;
@@ -38,7 +40,8 @@ public class ArticleController extends SuperController {
                 .editStatus(editStatus)
                 .build();
         Page<Article> list = articleService.getArticles(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
-        return R.ok("success").put("data", list).put("totalCount", list.getTotal());
+        JSONArray objects = JsonUtil.parseArray(list);
+        return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
     }
 
     /**

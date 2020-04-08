@@ -1,14 +1,19 @@
 package com.hotstrip.publish.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.hotstrip.publish.common.annotation.NotNullParam;
 import com.hotstrip.publish.common.annotation.RequireToken;
 import com.hotstrip.publish.common.util.Const;
+import com.hotstrip.publish.common.util.IdGen;
+import com.hotstrip.publish.common.util.JsonUtil;
 import com.hotstrip.publish.model.Agent;
 import com.hotstrip.publish.model.R;
 import com.hotstrip.publish.model.User;
+import com.hotstrip.publish.model.UserAgent;
 import com.hotstrip.publish.service.AgentPlaylistService;
 import com.hotstrip.publish.service.AgentService;
+import com.hotstrip.publish.service.UserAgentService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -22,6 +27,8 @@ public class AgentController extends SuperController {
 
     @Resource
     private AgentService agentService;
+    @Resource
+    private UserAgentService userAgentService;
     @Resource
     private AgentPlaylistService agentPlaylistService;
 
@@ -51,7 +58,8 @@ public class AgentController extends SuperController {
                 .build();
         info.setUserId(user.getUserId());
         Page<User> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
-        return R.ok("success").put("data", list).put("totalCount", list.getTotal());
+        JSONArray objects = JsonUtil.parseArray(list);
+        return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
     }
 
     /**
@@ -64,9 +72,15 @@ public class AgentController extends SuperController {
     @RequireToken
     @NotNullParam(params = {"agentName", "agentCode"})
     @PostMapping(value = "/web/agent/edit")
-    public Object edit(Long agentId,
+    public Object edit(@RequestHeader(value = Const.TOKEN) String token,
+                       Long agentId,
                        String agentName,
                        String agentCode) {
+        // 获取用户信息
+        User user = getUser(getUserIdByToken(token));
+        if(user == null){
+            return R.error(Const.ERROR_PARAM, "invalid user");
+        }
         Agent info = Agent.builder()
                 .agentId(agentId)
                 .agentName(agentName)
@@ -74,11 +88,18 @@ public class AgentController extends SuperController {
                 .build();
         // 查询终端是否存在
         Agent agent = agentService.getAgentByAgentCode(agentCode);
-        if (null != agent)
+        if (null != agent && agent.getAgentId() != agentId)
             return R.error(Const.ERROR_PARAM, "agent already exist");
         if (null == agentId) {
             // 新增
+            agentId = IdGen.get().nextId();
+            UserAgent userAgent = UserAgent.builder()
+                    .agentId(agentId)
+                    .userId(user.getUserId())
+                    .build();
+            info.setAgentId(agentId);
             agentService.insert(info);
+            userAgentService.insert(userAgent);
         } else {
             // 修改
             agentService.update(info);

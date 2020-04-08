@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotstrip.publish.dao.UserAgentDao">
+
+    <sql id="Base_Column_List">
+        user_agent_id, user_id, agent_id,
+        create_time, update_time, create_user, update_user, status
+    </sql>
+
+    <insert id="insert" parameterType="com.hotstrip.publish.model.UserAgent">
+        insert into t_user_agent
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userAgentId != null">
+                user_agent_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userAgentId != null">
+                #{userAgentId, jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId, jdbcType=BIGINT},
+            </if>
+            <if test="agentId != null">
+                #{agentId, jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser, jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser, jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status, jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

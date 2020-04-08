@@ -1,10 +1,12 @@
 package com.hotstrip.publish.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.hotstrip.publish.common.annotation.NotNullParam;
 import com.hotstrip.publish.common.annotation.RequireToken;
 import com.hotstrip.publish.common.util.Const;
 import com.hotstrip.publish.common.util.EncodeMD5;
+import com.hotstrip.publish.common.util.JsonUtil;
 import com.hotstrip.publish.common.util.TokenUtil;
 import com.hotstrip.publish.model.R;
 import com.hotstrip.publish.model.User;
@@ -73,7 +75,8 @@ public class UserController extends SuperController {
                 .userName(userName)
                 .build();
         Page<User> list = userService.getUsers(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
-        return R.ok("success").put("data", list).put("totalCount", list.getTotal());
+        JSONArray objects = JsonUtil.parseArray(list);
+        return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
     }
 
     /**
@@ -98,7 +101,7 @@ public class UserController extends SuperController {
         }
         // 查询用户是否存在
         User user = userService.getUserByUserName(userName);
-        if (null != user)
+        if (null != user && user.getUserId() != userId)
             return R.error(Const.ERROR_PARAM, "user already exist");
         if (null == userId) {
             // 新增
