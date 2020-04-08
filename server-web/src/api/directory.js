@@ -23,7 +23,8 @@ export function getChildDirectoies(parentDirectoryId) {
 export function editDirectory(data) {
   const param = {
     directoryId: data.directoryId,
-    directoryName: data.directoryName
+    directoryName: data.directoryName,
+    parentDirectoryId: data.parentDirectoryId
   }
   return request({
     url: '/web/directory/edit',

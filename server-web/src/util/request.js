@@ -2,13 +2,14 @@ import axios from 'axios'
 import qs from 'qs'
 import { Message, Notification } from 'element-ui'
 import store from '../store'
+import baseUrl from '@/config'
 
 const CODE_510 = 510
 
 // 创建axios实例
 const service = axios.create({
+  baseURL: baseUrl,
   timeout: 5000,
-  baseURL: 'http://127.0.0.1:8080/',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
   },

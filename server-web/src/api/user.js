@@ -20,3 +20,28 @@ export function getUsers(data) {
     data
   })
 }
+
+// 编辑
+export function editUser(data) {
+  const param = {
+    userId: data.userId,
+    userName: data.userName,
+    userPassword: data.userPassword
+  }
+  return request({
+    url: '/web/user/edit',
+    method: 'post',
+    data: param
+  })
+}
+
+// 删除
+export function deleteByUserId(userId) {
+  return request({
+    url: '/web/user/delete',
+    method: 'post',
+    data: {
+      userId
+    }
+  })
+}

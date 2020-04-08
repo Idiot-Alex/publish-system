@@ -27,7 +27,7 @@ export function editAgent(data) {
 // 删除
 export function deleteByAgentId(agentId) {
   return request({
-    url: '/web/agent/deleteByAgentId',
+    url: '/web/agent/delete',
     method: 'post',
     data: {
       agentId
