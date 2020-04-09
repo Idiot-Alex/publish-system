@@ -31,8 +31,9 @@
           {{ scope.row.createTime | _parseTime }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200px">
+      <el-table-column label="操作" width="240px">
         <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleUserAgent(scope.row)">分配终端</el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
         </template>
@@ -65,10 +66,24 @@
         <el-button type="primary" @click="editUser">确认</el-button>
       </div>
     </el-dialog>
+    <!-- 分配终端 -->
+    <el-dialog :title="dialogTitle" :visible.sync="dialogAgentVisible" width="700px">
+      <el-transfer
+        v-model="agentIds"
+        :props="{ key: 'agentId',label: 'agentName'}"
+        :data="sourceAgents"
+        :titles="['未分配终端', '已分配终端']"
+        filterable/>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAgentVisible = false">取消</el-button>
+        <el-button type="primary" @click="grantUserAgents">确认</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { getUsers, editUser, deleteByUserId } from '@/api/user'
+import { getAgents, getUserAgents, grantUserAgents } from '@/api/agent'
 import { parseTime } from '@/util'
 export default {
   filters: {
@@ -91,7 +106,11 @@ export default {
       // 编辑区
       tempPassword: null,
       dialogFormVisible: false,
+      dialogAgentVisible: false,
       dialogTitle: '',
+      // 分配终端
+      sourceAgents: [],
+      agentIds: [],
       rules: {
         userName: [{ required: true, trigger: 'blur', message: 'User Name is required' }],
         userPassword: [{ required: true, trigger: 'blur', message: 'Password is required' }]
@@ -197,6 +216,57 @@ export default {
           }
           // 关闭弹窗
           done()
+        }
+      })
+    },
+    // 分配终端弹窗
+    async handleUserAgent(row) {
+      this.temp = Object.assign({}, row)
+      this.dialogTitle = '分配终端'
+      // 数据置空
+      this.sourceAgentGroups = []
+      this.agentGroupIds = []
+      // 查询终端分组
+      const data = {
+        pageNo: 1,
+        pageSize: 65535,
+        userId: row.userId
+      }
+      // 查询所有终端
+      const list1 = await getAgents(data)
+      // 查询用户拥有的终端
+      const list2 = await getUserAgents(data)
+      // 判断结果
+      if (list1.code !== 0 || list2.code !== 0) {
+        this.$message.error('数据加载失败')
+        return
+      }
+      // 赋值
+      this.sourceAgents = list1.data
+      list2.data.forEach(element => {
+        if (this.agentIds.indexOf(element.agentId) < 0) {
+          this.agentIds.push(element.agentId)
+        }
+      })
+      this.dialogAgentVisible = true
+    },
+    // 分配终端
+    grantUserAgents() {
+      if (this.agentIds.length < 1) {
+        this.$message.error('请至少勾选一项')
+        return
+      }
+      // 分配用户终端分组
+      const data = {
+        userId: this.temp.userId,
+        agentIds: JSON.stringify(this.agentIds)
+      }
+      grantUserAgents(data).then(res => {
+        if (res.code === 0) {
+          this.$message.success(res.msg)
+          this.dialogAgentVisible = false
+        } else {
+          this.$message.error(res.msg)
         }
       })
     }

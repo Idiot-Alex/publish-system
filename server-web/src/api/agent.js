@@ -1,9 +1,18 @@
 import request from '@/util/request'
 
-// 分页查询
+// 分页查询 所有终端
 export function getAgents(data) {
   return request({
     url: '/web/agent/list',
+    method: 'post',
+    data
+  })
+}
+
+// 分页查询 用户拥有终端
+export function getUserAgents(data) {
+  return request({
+    url: '/web/agent/user-list',
     method: 'post',
     data
   })
@@ -32,5 +41,14 @@ export function deleteByAgentId(agentId) {
     data: {
       agentId
     }
+  })
+}
+
+// 分配用户终端
+export function grantUserAgents(data) {
+  return request({
+    url: '/web/agent/grant-user-agents',
+    method: 'post',
+    data
   })
 }

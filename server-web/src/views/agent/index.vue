@@ -92,7 +92,7 @@
   </div>
 </template>
 <script>
-import { getAgents, editAgent, deleteByAgentId } from '@/api/agent'
+import { getUserAgents, editAgent, deleteByAgentId } from '@/api/agent'
 import { parseTime } from '@/util'
 export default {
   filters: {
@@ -145,7 +145,7 @@ export default {
     // 加载数据
     loadData() {
       this.listLoading = true
-      getAgents(this.listQuery).then(res => {
+      getUserAgents(this.listQuery).then(res => {
         // 加载数据成功
         if (res.code === 0) {
           this.totalCount = res.totalCount

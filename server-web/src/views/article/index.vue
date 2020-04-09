@@ -26,6 +26,38 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
+      <el-table-column label="标题" width="200px">
+        <template slot-scope="scope">
+          {{ scope.row.title }}
+        </template>
+      </el-table-column>
+      <el-table-column label="封面图" width="100px" header-align="left" align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="hover">
+            <img :src="scope.row.coverImage" style="max-width: 500px">
+            <img slot="reference" :src="scope.row.coverImage" alt="封面图" width="25px">
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column label="编辑状态" width="100px">
+        <template slot-scope="scope">
+          {{ scope.row.editStatus | _editStatus }}
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" width="150px">
+        <template slot-scope="scope">
+          {{ scope.row.createTime | _parseTime }}
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="200px">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 分页区 -->
     <div ref="pagination-container" class="pagination-container">
@@ -39,11 +71,45 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"/>
     </div>
+    <!-- 编辑区 -->
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" width="820px">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="right" label-width="130px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="temp.title"/>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <wang-editor :content="temp.content" @editorContent="getEditorContent" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="editArticle">确认</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
+import WangEditor from '@/components/wang-editor'
 import { getArticles } from '@/api/article'
+import { parseTime } from '@/util'
 export default {
+  components: {
+    WangEditor
+  },
+  filters: {
+    _editStatus(status) {
+      const map = {
+        0: '未完成',
+        1: '已完成',
+        2: '已撤销'
+      }
+      return map[status]
+    },
+    _parseTime(time) {
+      const option = '{y}-{m}-{d} {h}:{i}:{s}'
+      return parseTime(time, option)
+    }
+  },
   data() {
     return {
       listQuery: {
@@ -54,7 +120,11 @@ export default {
       totalCount: 0,
       listLoading: true,
       temp: {},
-      tableHeight: '80vh'
+      tableHeight: '80vh',
+      // 编辑区
+      dialogFormVisible: false,
+      dialogTitle: '',
+      rules: {}
     }
   },
   created() {
@@ -100,7 +170,26 @@ export default {
     },
     // 添加
     handleCreate() {
+      this.dialogTitle = '添加'
+      this.dialogFormVisible = true
+    },
+    // 修改
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row)
+      this.dialogTitle = '修改'
+      this.dialogFormVisible = true
+    },
+    // 编辑
+    editArticle() {
 
+    },
+    // 删除
+    handleDelete(row) {
+      console.log(row)
+    },
+    // 获取编辑器内容
+    getEditorContent(data) {
+      this.temp.content = data
     }
   }
 }
