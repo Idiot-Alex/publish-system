@@ -140,7 +140,7 @@ public class FileUtil {
      * @return
      */
     public static String removeBaseDirectory(String baseDirectory, String path){
-        return path.replaceAll(baseDirectory, "");
+        return FileUtil.getTrulyPath(path).replaceAll(baseDirectory, "");
     }
 
     /**
