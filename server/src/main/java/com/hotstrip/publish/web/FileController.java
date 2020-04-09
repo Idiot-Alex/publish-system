@@ -41,6 +41,7 @@ public class FileController extends SuperController {
      * 分页查询
      * @param pageNo
      * @param pageSize
+     * @param directoryId
      * @param oldName
      * @param fileType
      * @return
@@ -49,9 +50,11 @@ public class FileController extends SuperController {
     @PostMapping(value = "/web/file/list")
     public Object list(@RequestParam(defaultValue = "1") Integer pageNo,
                        @RequestParam(defaultValue = "20") Integer pageSize,
+                       Long directoryId,
                        String oldName,
                        Integer fileType) {
         FileInfo info = FileInfo.builder()
+                .directoryId(directoryId)
                 .oldName(oldName)
                 .fileType(fileType)
                 .build();
