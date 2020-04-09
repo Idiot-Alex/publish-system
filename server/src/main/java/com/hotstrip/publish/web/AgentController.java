@@ -1,5 +1,6 @@
 package com.hotstrip.publish.web;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.hotstrip.publish.common.annotation.NotNullParam;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class AgentController extends SuperController {
@@ -33,7 +35,7 @@ public class AgentController extends SuperController {
     private AgentPlaylistService agentPlaylistService;
 
     /**
-     * 分页查询
+     * 分页查询 全部终端
      * @param pageNo
      * @param pageSize
      * @param agentName
@@ -42,21 +44,49 @@ public class AgentController extends SuperController {
      */
     @RequireToken
     @PostMapping(value = "/web/agent/list")
-    public Object list(@RequestHeader(value = Const.TOKEN) String token,
-                       @RequestParam(defaultValue = "1") Integer pageNo,
+    public Object list(@RequestParam(defaultValue = "1") Integer pageNo,
                        @RequestParam(defaultValue = "20") Integer pageSize,
                        String agentName,
                        String agentCode) {
+        Agent info = Agent.builder()
+                .agentName(agentName)
+                .agentCode(agentCode)
+                .build();
+        Page<User> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
+        JSONArray objects = JsonUtil.parseArray(list);
+        return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
+    }
+
+    /**
+     * 分页查询 用户拥有的终端
+     * @param pageNo
+     * @param pageSize
+     * @param agentName
+     * @param agentCode
+     * @param userId
+     * @return
+     */
+    @RequireToken
+    @PostMapping(value = "/web/agent/user-list")
+    public Object userList(@RequestHeader(value = Const.TOKEN) String token,
+                           @RequestParam(defaultValue = "1") Integer pageNo,
+                           @RequestParam(defaultValue = "20") Integer pageSize,
+                           String agentName,
+                           String agentCode,
+                           Long userId) {
         // 获取用户信息
-        User user = getUser(getUserIdByToken(token));
-        if(user == null){
-            return R.error(Const.ERROR_PARAM, "invalid user");
+        if (null == userId) {
+            User user = getUser(getUserIdByToken(token));
+            if (user == null) {
+                return R.error(Const.ERROR_PARAM, "invalid user");
+            }
+            userId = user.getUserId();
         }
         Agent info = Agent.builder()
                 .agentName(agentName)
                 .agentCode(agentCode)
                 .build();
-        info.setUserId(user.getUserId());
+        info.setUserId(userId);
         Page<User> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
         JSONArray objects = JsonUtil.parseArray(list);
         return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
@@ -122,6 +152,34 @@ public class AgentController extends SuperController {
         userAgentService.deleteByAgentId(agentId);
         // 删除终端
         agentService.deleteByAgentId(agentId);
+        return R.ok("success");
+    }
+
+    /**
+     * 分配用户终端
+     * @param userId
+     * @param agentIds
+     * @return
+     */
+    @RequireToken
+    @NotNullParam(params = {"userId", "agentIds"})
+    @PostMapping(value = "/web/agent/grant-user-agents")
+    public Object grantUserAgents(Long userId,
+                                  String agentIds) {
+        List<Long> ids = JSON.parseArray(agentIds, Long.class);
+        if (ids.isEmpty()) {
+            return R.error(Const.ERROR_PARAM, "invalid param agentIds");
+        }
+        // 删除原来的数据
+        userAgentService.deleteByUserId(userId);
+        // 添加数据
+        ids.forEach(agentId -> {
+            UserAgent info = UserAgent.builder()
+                    .userId(userId)
+                    .agentId(agentId)
+                    .build();
+            userAgentService.insert(info);
+        });
         return R.ok("success");
     }
 }
