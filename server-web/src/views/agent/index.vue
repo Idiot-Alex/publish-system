@@ -86,7 +86,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="editUser">确认</el-button>
+        <el-button type="primary" @click="editAgent">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -187,7 +187,7 @@ export default {
       this.dialogFormVisible = true
     },
     // 提交
-    editUser() {
+    editAgent() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           editAgent(this.temp).then((res) => {
