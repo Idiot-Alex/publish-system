@@ -37,6 +37,7 @@
       <el-container>
         <el-header class="header">
           <h1>信息发布系统</h1>
+          <el-button class="log-out" @click="logOut">退出登录</el-button>
           <span class="user-name">当前用户：{{ userName }}</span>
         </el-header>
         <section class="app-main">
@@ -82,6 +83,10 @@ export default {
       }
       this.currentPath = path
       this.$router.push(path)
+    },
+    // 退出登录
+    logOut() {
+      this.$router.push('/login')
     }
   }
 }
@@ -100,6 +105,10 @@ export default {
     border-bottom: 1px solid #d0d0d0;
     h1 {
       float: left;
+    }
+    .log-out {
+      float: right;
+      margin: 10px;
     }
     .user-name {
       line-height: 60px;

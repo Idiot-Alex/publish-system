@@ -52,3 +52,14 @@ export function grantUserAgents(data) {
     data
   })
 }
+
+// 心跳
+export function heartbeat(agentId) {
+  return request({
+    url: '/web/agent/heartbeat',
+    method: 'post',
+    data: {
+      agentId
+    }
+  })
+}

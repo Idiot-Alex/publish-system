@@ -75,7 +75,7 @@ $light_gray:#eee;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
-      padding: 5px;
+      padding: 5px 5px 5px 20px;
       color: $light_gray;
       height: 47px;
       &:-webkit-autofill {
