@@ -115,18 +115,4 @@ status int NOT NULL  DEFAULT '1'  COMMENT '状态',
 PRIMARY KEY (list_id)
 );
 
-/*终端任务信息表*/
-DROP TABLE IF EXISTS t_agent_task;
-
-CREATE TABLE t_agent_task(
-task_id bigint NOT NULL   COMMENT '任务 ID',
-agent_id bigint NOT NULL   COMMENT '终端 ID',
-code int   COMMENT '命令',
-create_time datetime   COMMENT '创建时间',
-update_time datetime   COMMENT '修改时间',
-create_user bigint   COMMENT '创建用户',
-update_user bigint   COMMENT '修改用户',
-status int NOT NULL  DEFAULT '1'  COMMENT '状态',
-PRIMARY KEY (task_id)
-);
 
