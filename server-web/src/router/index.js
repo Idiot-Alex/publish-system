@@ -32,6 +32,11 @@ export default new Router({
         component: () => import('@/views/article')
       },
       {
+        name: 'play-list',
+        path: '/agent-playlist',
+        component: () => import('@/views/agent-playlist')
+      },
+      {
         name: 'user',
         path: '/user',
         component: () => import('@/views/user')

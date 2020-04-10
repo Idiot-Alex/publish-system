@@ -24,7 +24,11 @@
             <i class="el-icon-setting"></i>
             <span slot="title">文稿信息</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="toPath('/user')">
+          <el-menu-item index="5" @click="toPath('/agent-playlist')">
+            <i class="el-icon-setting"></i>
+            <span slot="title">播单信息</span>
+          </el-menu-item>
+          <el-menu-item index="6" @click="toPath('/user')">
             <i class="el-icon-setting"></i>
             <span slot="title">用户信息</span>
           </el-menu-item>
@@ -56,7 +60,8 @@ export default {
         '/agent': '2',
         '/file': '3',
         '/article': '4',
-        '/user': '5'
+        '/play-list': '5',
+        '/user': '6'
       }
     }
   },

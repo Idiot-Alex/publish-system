@@ -4,7 +4,7 @@ switch(process.env.NODE_ENV) {
     baseUrl = 'http://127.0.0.1:8080/publish/'
     break
   default:
-    baseUrl = 'http://192.168.12.70:8080/publish/'
+    baseUrl = 'http://192.168.12.71:8080/publish/'
     break
 }
 export default baseUrl
