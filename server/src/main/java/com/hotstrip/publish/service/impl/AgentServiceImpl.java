@@ -46,7 +46,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public Page<User> getAgents(RowBounds rowBounds, Agent info) {
+    public Page<Agent> getAgents(RowBounds rowBounds, Agent info) {
         return agentDao.getAgents(rowBounds, info);
     }
 

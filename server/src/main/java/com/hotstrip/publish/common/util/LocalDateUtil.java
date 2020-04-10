@@ -1,4 +1,4 @@
-package com.seestech.sell.common.utils;
+package com.hotstrip.publish.common.util;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,7 @@ public class AgentController extends SuperController {
                 .agentName(agentName)
                 .agentCode(agentCode)
                 .build();
-        Page<User> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
+        Page<Agent> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
         JSONArray objects = JsonUtil.parseArray(list);
         return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
     }
@@ -87,7 +88,7 @@ public class AgentController extends SuperController {
                 .agentCode(agentCode)
                 .build();
         info.setUserId(userId);
-        Page<User> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
+        Page<Agent> list = agentService.getAgents(new RowBounds((pageNo - 1) * pageSize, pageSize), info);
         JSONArray objects = JsonUtil.parseArray(list);
         return R.ok("success").put("data", objects).put("totalCount", list.getTotal());
     }
@@ -118,7 +119,7 @@ public class AgentController extends SuperController {
                 .build();
         // 查询终端是否存在
         Agent agent = agentService.getAgentByAgentCode(agentCode);
-        if (null != agent && agent.getAgentId() != agentId)
+        if (null != agent && !agent.getAgentId().equals(agentId))
             return R.error(Const.ERROR_PARAM, "agent already exist");
         if (null == agentId) {
             // 新增
@@ -180,6 +181,23 @@ public class AgentController extends SuperController {
                     .build();
             userAgentService.insert(info);
         });
+        return R.ok("success");
+    }
+
+    /**
+     * 心跳
+     * @param agentId
+     * @return
+     */
+    @NotNullParam(params = {"agentId"})
+    @PostMapping(value = "/web/agent/heartbeat")
+    public Object heartbeat(Long agentId) {
+        Agent info = Agent.builder()
+                .agentId(agentId)
+                .lastHeartbeatTime(new Date())
+                .onlineStatus(0)
+                .build();
+        agentService.update(info);
         return R.ok("success");
     }
 }

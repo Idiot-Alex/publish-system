@@ -16,7 +16,7 @@ public interface AgentService {
     void deleteByAgentId(Long agentId);
 
     // 分页查询
-    Page<User> getAgents(RowBounds rowBounds, Agent info);
+    Page<Agent> getAgents(RowBounds rowBounds, Agent info);
 
     // 根据 agentCode 查询
     Agent getAgentByAgentCode(String agentCode);

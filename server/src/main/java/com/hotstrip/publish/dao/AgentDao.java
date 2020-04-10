@@ -22,7 +22,7 @@ public interface AgentDao {
     int deleteByAgentId(@Param("agentId") Long agentId);
 
     // 分页查询
-    Page<User> getAgents(RowBounds rowBounds, Agent info);
+    Page<Agent> getAgents(RowBounds rowBounds, Agent info);
 
     // 根据 agentCode 查询
     @Select("select * from t_agent where agent_code = #{agentCode}")

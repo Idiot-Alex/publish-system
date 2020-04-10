@@ -100,7 +100,7 @@
                 heartbeat_frequency = #{heartbeatFrequency, jdbcType=INTEGER},
             </if>
             <if test="lastHeartbeatTime != null">
-                last_hearbeat_time = #{lastHeartbeatTime, jdbcType=TIMESTAMP},
+                last_heartbeat_time = #{lastHeartbeatTime, jdbcType=TIMESTAMP},
             </if>
             <if test="onlineStatus != null">
                 online_status = #{onlineStatus, jdbcType=INTEGER},

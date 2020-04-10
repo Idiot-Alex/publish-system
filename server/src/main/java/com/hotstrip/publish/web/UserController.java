@@ -101,7 +101,7 @@ public class UserController extends SuperController {
         }
         // 查询用户是否存在
         User user = userService.getUserByUserName(userName);
-        if (null != user && user.getUserId() != userId)
+        if (null != user && !user.getUserId().equals(userId))
             return R.error(Const.ERROR_PARAM, "user already exist");
         if (null == userId) {
             // 新增
