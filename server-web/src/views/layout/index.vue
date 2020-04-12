@@ -61,7 +61,7 @@ export default {
         '/agent': '2',
         '/file': '3',
         '/article': '4',
-        '/play-list': '5',
+        '/agent-playlist': '5',
         '/user': '6'
       }
     }
