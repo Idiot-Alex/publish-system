@@ -157,7 +157,7 @@ public class FileController extends SuperController {
                         }
 
                         // 删除临时文件夹 以及里面的文件
-                        FileUtils.deleteDirectory(tempFileDir);
+                        FileUtil.deleteDirectory(tempFileDir);
 
                         String result = FileUtil.removeBaseDirectory(applicationConfig.getBaseDirectory(), finalFile.getPath());
                         result = FileUtil.addPathSeparate(getServerPath(httpServletRequest), result);

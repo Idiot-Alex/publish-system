@@ -50,10 +50,8 @@ public class ScheduleConfig {
         boolean flag = true;
         int day = 0;
         long minutes = 0;
-        // TCP 连接方式或者 SOCKET 连接方式断线
         // 获取系统当前时间  对比终端上一次心跳时间  转换为分钟数  更新终端心跳频率
         if (agent.getLastHeartbeatTime() != null) {
-            // logger.info("终端上次心跳时间：[{}]", LocalDateUtil.getDateTimeAsString(ZonedDateTime.now().toLocalDateTime(), LocalDateUtil.SIMPLE_DATE_HOURS_PATTERN));
             String nextDay = LocalDateUtil.getDateTimeAsString(LocalDateUtil.getDateTimeOfTimestamp(agent.getLastHeartbeatTime().getTime()).plusDays(1L), LocalDateUtil.SDF_YMD_PATTERN);
             // 上次心跳时间获取第二天时间  如果年月日匹配当前时间  就断线一天  不匹配就计算分钟数
             if (currentDate.equals(nextDay)) {
