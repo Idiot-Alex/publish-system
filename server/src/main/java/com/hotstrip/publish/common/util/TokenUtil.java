@@ -32,13 +32,13 @@ public class TokenUtil {
     /**
      * @description 根据token的创建时间  有效时间  和当前时间  判断改token是否失效
      * @param tokenTime
-     * @param TokenVlidTime
+     * @param TokenValidTime
      * @return  true 未失效   false 失效
      */
-    public static boolean validToken(long tokenTime, long TokenVlidTime){
+    public static boolean validToken(long tokenTime, long TokenValidTime){
         boolean valid = false;
         long currentTime = System.currentTimeMillis();
-        if(tokenTime + TokenVlidTime > currentTime){
+        if(tokenTime + TokenValidTime > currentTime){
             valid = true;
         }
         return valid;

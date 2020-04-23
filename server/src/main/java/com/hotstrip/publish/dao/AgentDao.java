@@ -2,7 +2,6 @@ package com.hotstrip.publish.dao;
 
 import com.github.pagehelper.Page;
 import com.hotstrip.publish.model.Agent;
-import com.hotstrip.publish.model.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

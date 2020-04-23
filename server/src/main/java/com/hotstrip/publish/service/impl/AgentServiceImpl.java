@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.hotstrip.publish.common.util.IdGen;
 import com.hotstrip.publish.dao.AgentDao;
 import com.hotstrip.publish.model.Agent;
-import com.hotstrip.publish.model.User;
 import com.hotstrip.publish.service.AgentService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;

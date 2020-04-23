@@ -3,11 +3,6 @@ package com.hotstrip.publish.common.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-
-
 /**
  * Created by idiot on 2017/4/10.
  * @description  获取系统相关信息

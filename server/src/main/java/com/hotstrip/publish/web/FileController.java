@@ -15,7 +15,6 @@ import com.hotstrip.publish.model.R;
 import com.hotstrip.publish.service.DirectoryService;
 import com.hotstrip.publish.service.FileService;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
