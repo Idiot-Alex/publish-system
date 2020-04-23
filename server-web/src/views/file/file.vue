@@ -49,7 +49,7 @@
           <span>{{ scope.row.createTime | _parseTime() }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" fixed="right" width="240px" align="center">
+      <el-table-column label="操作" fixed="right" width="auto">
         <template slot-scope="scope">
           <el-button type="success" size="mini" @click="handlePreview(scope.row.filePath)">预览</el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">重命名</el-button>

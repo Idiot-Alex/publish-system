@@ -31,7 +31,7 @@
           {{ scope.row.createTime | _parseTime }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="240px">
+      <el-table-column label="操作" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUserAgent(scope.row)">分配终端</el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>

@@ -52,7 +52,7 @@
           {{ scope.row.createTime | _parseTime }}
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="250px">
+      <el-table-column fixed="right" label="操作" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
