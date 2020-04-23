@@ -104,7 +104,7 @@ export default {
         2: '离线 2 天',
         3: '离线 3 天以上'
       }
-      return map[status]
+      return map[status > 3 ? 3 : status]
     },
     _parseTime(time) {
       const option = '{y}-{m}-{d} {h}:{i}:{s}'
