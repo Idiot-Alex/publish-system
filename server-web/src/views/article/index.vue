@@ -78,7 +78,7 @@
     <el-dialog :title="dialogTitle" :visible.sync="previewVisible" width="820px">
       <div style="margin: 0 auto">
         <h2 style="text-align: center">{{ temp.title }}</h2>
-        <img :src="temp.coverImage">
+        <img :src="temp.coverImage" class="cover-image">
         <div v-html="temp.content"></div>
       </div>
     </el-dialog>
@@ -371,5 +371,10 @@ export default {
       margin-right: 10px;
     }
   }
+}
+.cover-image {
+  display: block;
+  max-width: 90%;
+  margin: 0 auto;
 }
 </style>

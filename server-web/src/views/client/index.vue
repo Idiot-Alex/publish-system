@@ -2,7 +2,7 @@
   <div class="wrap">
     <el-card v-for="item in list" :key="item.listId">
       <h1>{{ item.title }}</h1>
-      <img v-show="item.coverImage && item.coverImage.length > 0" :src="item.coverImage">
+      <img v-show="item.coverImage && item.coverImage.length > 0" :src="item.coverImage" class="cover-image">
       <div v-html="item.content"/>
     </el-card>
   </div>
@@ -58,6 +58,11 @@ export default {
 <style lang="scss" scoped>
 .wrap {
   width: 800px;
+  margin: 0 auto;
+}
+.cover-image {
+  display: block;
+  max-width: 90%;
   margin: 0 auto;
 }
 </style>
